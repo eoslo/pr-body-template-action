@@ -833,7 +833,7 @@ function update_with_template(octokit, issue, template_dir, filename) {
     octokit.pulls.update({
         owner: issue.owner,
         repo: issue.repo,
-        issue_number: issue.number,
+        pull_number: issue.number,
         body: `${file_content}`,
     });
     octokit.issues.createComment({
