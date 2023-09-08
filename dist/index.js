@@ -834,7 +834,7 @@ function update_with_template(octokit, issue, template_dir, filename) {
         owner: issue.owner,
         repo: issue.repo,
         issue_number: issue.number,
-        body: file_content,
+        body: `${file_content}`,
     });
     octokit.issues.createComment({
         owner: issue.owner,
