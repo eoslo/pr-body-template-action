@@ -819,7 +819,7 @@ async function run() {
             return;
         }
 
-        create_comment(octokit, issue, template_dir, filename);
+        update_with_template(octokit, issue, template_dir, filename);
     } catch (error) {
         core.setFailed(error.message);
     }
@@ -828,14 +828,19 @@ async function run() {
 /**
  * Post a comment with the content of `filename` to a given GitHub issue.
  */
-function create_comment(octokit, issue, template_dir, filename) {
+function update_with_template(octokit, issue, template_dir, filename) {
     let file_content = readFileSync(`${template_dir}${filename}`, {encoding: "utf8"});
-
-    octokit.issues.createComment({
+    octokit.pulls.update({
         owner: issue.owner,
         repo: issue.repo,
         issue_number: issue.number,
         body: file_content,
+    });
+    octokit.issues.createComment({
+        owner: issue.owner,
+        repo: issue.repo,
+        issue_number: issue.number,
+        body: "No olvidarse de completar la descripcion del pr!",
     });
 }
 
